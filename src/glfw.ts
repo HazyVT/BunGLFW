@@ -1,4 +1,4 @@
-import { dlopen, suffix, FFIType, ptr, CString, type Pointer, toArrayBuffer, JSCallback } from "bun:ffi";
+import { dlopen, suffix, FFIType } from "bun:ffi";
 
 const platform = process.platform;
 let path: string = "";
@@ -31,7 +31,7 @@ export const lib = dlopen(path, {
   },
   glfwWindowShouldClose: {
     args: ["ptr"],
-    returns: "int"
+    returns: "bool"
   },
   glfwPollEvents: {
     returns: "void"
@@ -50,7 +50,7 @@ export const lib = dlopen(path, {
   },
   glfwGetWindowAttrib: {
     args: ["ptr", "int"],
-    returns: "int"
+    returns: "bool"
   },
   glfwDestroyWindow: {
     args: ["ptr"],
@@ -60,6 +60,7 @@ export const lib = dlopen(path, {
     returns: "void"
   },
   glfwDefaultWindowHints: {
+    args: [],
     returns: "void"
   },
   glfwWindowHint: {
@@ -74,6 +75,126 @@ export const lib = dlopen(path, {
     args: ["cstring"],
     returns: "int"
   },
-  
+  glfwWindowHintString: {
+    args: ["int", "cstring"],
+    returns: "void"
+  },
+  glfwSetWindowShouldClose: {
+    args: ["ptr", "int"],
+    returns: "void"
+  },
+  glfwSetWindowTitle: {
+    args: ["ptr", "cstring"],
+    returns: "void"
+  },
+  glfwSetWindowPos: {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  },
+  glfwSetWindowSize: {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  },
+  glfwSetWindowSizeLimits: {
+    args: ["ptr", "int", "int", "int", "int"],
+    returns: "void"
+  },
+  glfwSetWindowAspectRatio: {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  },
+  glfwGetWindowOpacity: {
+    args: ["ptr"],
+    returns: "float"
+  },
+  glfwSetWindowOpacity: {
+    args: ["ptr"],
+    returns: "void"
+  },
+  glfwIconifyWindow: {
+    args: ["ptr"],
+    returns: "void"
+  },
+  glfwRestoreWindow: {
+    args: ["ptr"],
+    returns: "void"
+  },
+  glfwMaximizeWindow: {
+    args: ["ptr"],
+    returns: "void"
+  },
+  glfwHideWindow: {
+    args: ["ptr"],
+    returns: "void"
+  },
+  glfwFocusWindow: {
+    args: ["ptr"],
+    returns: "void"
+  },
+  glfwRequestWindowAttention: {
+    args: ["ptr"],
+    returns: "void"
+  },
+  glfwGetWindowMonitor: {
+    args: ["ptr"],
+    returns: "ptr"
+  },
+  glfwSetWindowMonitor: {
+    args: ["ptr", "ptr", "int", "int", "int", "int", "int"],
+    returns: "void"
+  },
+  glfwSetWindowAttrib: {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  },
+  glfwWaitEvents: {
+    args: [],
+    returns: "void"
+  },
+  glfwWaitEventsTimeout: {
+    args: ["double"],
+    returns: "void"
+  },
+  glfwPostEmptyEvent: {
+    args: [],
+    returns: "void"
+  },
+  glfwSetWindowPosCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetWindowSizeCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetWindowCloseCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetWindowRefreshCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetWindowFocusCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetWindowIconifyCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetWindowMaximizeCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetFramebufferSizeCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetWindowContentScaleCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+
 
 })

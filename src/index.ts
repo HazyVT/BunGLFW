@@ -1,4 +1,4 @@
-import { ptr, JSCallback, CFunction, type CString } from 'bun:ffi'
+import { ptr, JSCallback, CFunction, FFIType } from 'bun:ffi'
 import { lib } from "./glfw"
 
 // GLFW window vairables
@@ -282,37 +282,127 @@ export const GLFW_FEATURE_UNAVAILABLE   = 0x0001000C
 export const GLFW_FEATURE_UNIMPLEMENTED = 0x0001000D
 export const GLFW_PLATFORM_UNAVAILABLE  = 0x0001000E
 
-// Types
+/* Types */
 export type glfwMonitor = number | null;
 export type glfwWindow = number | null;
 export type glfwAllocator = number | null;
 export type glfwCursor = number | null;
+
+/* Function Types */
+export type GLFWwindowposfun = (window: glfwWindow, xpos: number, ypos: number) => void;
+export type GLFWwindowsizefun = (window: glfwWindow, width: number, height: number) => void;
+export type GLFWwindowclosefun = (window: glfwWindow) => void;
+export type GLFWwindowrefreshfun = (window: glfwWindow) => void;
+export type GLFWwindowfocusfun = (window: glfwWindow, focused: number) => void;
+export type GLFWwindowiconifyfun = (window: glfwWindow, iconified: number) => void;
+export type GLFWwindowmaximizefun = (window: glfwWindow, maximized: number) => void;
+export type GLFWframebuffersizefun = (window: glfwWindow, width: number, height: number) => void;
+export type GLFWwindowcontentscalefun = (window: glfwWindow, x_scale: number, y_scale: number) => void; 
 
 // Void argument functions
 export const glfwInit = lib.symbols.glfwInit;
 export const glfwPollEvents = lib.symbols.glfwPollEvents;
 export const glfwTerminate = lib.symbols.glfwTerminate;
 export const glfwDefaultWindowHints = lib.symbols.glfwDefaultWindowHints;
+export const glfwWaitEvents = lib.symbols.glfwWaitEvents;
+export const glfwPostEmptyEvent = lib.symbols.glfwPostEmptyEvent;
 
 // Window
-export const glfwCreateWindow = (width: number, height: number, title: string, monitor: glfwMonitor, share: glfwWindow) => lib.symbols.glfwCreateWindow(width, height, Buffer.from(title), monitor, share);
-export const glfwMakeContextCurrent = (window: glfwWindow) => lib.symbols.glfwMakeContextCurrent(window);
-export const glfwSwapInterval = (interval: number) => lib.symbols.glfwSwapInterval(interval);
-export const glfwShowWindow = (window: glfwWindow) => lib.symbols.glfwShowWindow(window);
-export const glfwWindowShouldClose = (window: glfwWindow) => lib.symbols.glfwWindowShouldClose(window);
-export const glfwSwapBuffers = (window: glfwWindow) => lib.symbols.glfwSwapBuffers(window);
-export const glfwGetWindowAttrib = (window: glfwWindow, attribute: number) => lib.symbols.glfwGetWindowAttrib(window, attribute);
-export const glfwDestroyWindow = (window: glfwWindow) => lib.symbols.glfwDestroyWindow(window);
-export const glfwWindowHint = (hint: number, state: number) => lib.symbols.glfwWindowHint(hint, state);
-export const glfwInitHint = (hint: number, state: number) => lib.symbols.glfwInitHint(hint, state);
-export const glfwGetError = (description: string) => lib.symbols.glfwGetError(Buffer.from(description));
+export const glfwCreateWindow = (width: number, height: number, title: string, monitor: glfwMonitor, share: glfwWindow) : glfwWindow => lib.symbols.glfwCreateWindow(width, height, Buffer.from(title), monitor, share);
+export const glfwMakeContextCurrent = (window: glfwWindow) : void => lib.symbols.glfwMakeContextCurrent(window);
+export const glfwSwapInterval = (interval: number) : void => lib.symbols.glfwSwapInterval(interval);
+export const glfwShowWindow = (window: glfwWindow) : void => lib.symbols.glfwShowWindow(window);
+export const glfwWindowShouldClose = (window: glfwWindow) : boolean => lib.symbols.glfwWindowShouldClose(window);
+export const glfwSwapBuffers = (window: glfwWindow) : void => lib.symbols.glfwSwapBuffers(window);
+export const glfwGetWindowAttrib = (window: glfwWindow, attribute: number) : boolean => lib.symbols.glfwGetWindowAttrib(window, attribute);
+export const glfwDestroyWindow = (window: glfwWindow) : void => lib.symbols.glfwDestroyWindow(window);
+export const glfwWindowHint = (hint: number, state: number) : void => lib.symbols.glfwWindowHint(hint, state);
+export const glfwInitHint = (hint: number, state: number) : void => lib.symbols.glfwInitHint(hint, state);
+export const glfwGetError = (description: string) : number => lib.symbols.glfwGetError(Buffer.from(description));
+export const glfwWindowHintString = (hint: number, value: string) : void => lib.symbols.glfwWindowHintString(hint, Buffer.from(value));
+export const glfwSetWindowShouldClose = (window: glfwWindow, value: number) : void => lib.symbols.glfwSetWindowShouldClose(window, value);
+export const glfwSetWindowTitle = (window: glfwWindow, title: string) : void => lib.symbols.glfwSetWindowTitle(window, Buffer.from(title));
+export const glfwSetWindowPos = (window: glfwWindow, x: number, y: number) : void => lib.symbols.glfwSetWindowPos(window, x, y);
+export const glfwSetWindowSize = (window: glfwWindow, width: number, height: number) : void => lib.symbols.glfwSetWindowSize(window, width, height);
+export const glfwSetWindowSizeLimits = (window: glfwWindow, minWidth: number, minHeight: number, maxWidth: number, maxHeight: number) : void => lib.symbols.glfwSetWindowSizeLimits(window, minWidth, minHeight, maxWidth, maxHeight);
+export const glfwSetWindowAspectRatio = (window: glfwWindow, numer: number, denom: number) : void => lib.symbols.glfwSetWindowAspectRatio(window, numer, denom);
+export const glfwGetWindowOpacity = (window: glfwWindow) : number => lib.symbols.glfwGetWindowOpacity(window);
+export const glfwSetWindowMonitor = (window: glfwWindow, monitor: glfwMonitor, x: number, y: number, width: number, height: number, refresh_rate: number) : void => lib.symbols.glfwSetWindowMonitor(window, monitor, x, y, width, height, refresh_rate);
+export const glfwIconifyWindow = (window: glfwWindow) : void => lib.symbols.glfwIconifyWindow(window);
+export const glfwRestoreWindow = (window: glfwWindow) : void => lib.symbols.glfwRestoreWindow(window);
+export const glfwMaximizeWindow = (window: glfwWindow) : void => lib.symbols.glfwMaximizeWindow(window);
+export const glfwHideWindow = (window: glfwWindow) : void => lib.symbols.glfwHideWindow(window);
+export const glfwFocusWindow = (window: glfwWindow) : void => lib.symbols.glfwFocusWindow(window);
+export const glfwRequestWindowAttention = (window: glfwWindow) : void => lib.symbols.glfwRequestWindowAttention(window);
+export const glfwGetWindowMonitor = (window: glfwWindow) : glfwMonitor => lib.symbols.glfwGetWindowMonitor(window);
+export const glfwSetWindowAttrib = (window: glfwWindow, attribute: number, value: number) : void => lib.symbols.glfwSetWindowAttrib(window, attribute, value);
+export const glfwWaitEventsTimeout = (timeout: number) => lib.symbols.glfwWaitEventsTimeout(timeout);
 
+// Setters
+export const glfwSetWindowPosCallback = (window: glfwWindow, callback: GLFWwindowposfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetWindowPosCallback(window, clb);
+}
 
-// TESTING
-const callback = new JSCallback(err => err, {
-  args: ["int", "cstring"],
-  returns: ""
-})
+export const glfwSetWindowSizeCallback = (window: glfwWindow, callback: GLFWwindowsizefun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetWindowSizeCallback(window, clb);
+}
+
+export const glfwSetWindowCloseCallback = (window: glfwWindow, callback: GLFWwindowclosefun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetWindowCloseCallback(window, clb);
+}
+
+export const glfwSetWindowRefreshCallback = (window: glfwWindow, callback: GLFWwindowrefreshfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetWindowRefreshCallback(window, clb);
+}
+
+export const glfwSetWindowFocusCallback = (window: glfwWindow, callback: GLFWwindowfocusfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetWindowFocusCallback(window, clb);
+}
+
+export const glfwSetWindowIconifyCallback = (window: glfwWindow, callback: GLFWwindowiconifyfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetWindowIconifyCallback(window, clb);
+}
+
+export const glfwSetWindowMaximizeCallback = (window: glfwWindow, callback: GLFWwindowmaximizefun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetWindowMaximizeCallback(window, clb);
+}
+
+export const glfwSetFramebufferSizeCallback = (window: glfwWindow, callback: GLFWframebuffersizefun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetFramebufferSizeCallback(window, clb);
+}
+
 
 
 
