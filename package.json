@@ -8,7 +8,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "dev": "bun run src/index.ts"
+    "dev": "bun run main.ts"
   },
   "type": "module"
 }
