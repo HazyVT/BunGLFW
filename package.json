@@ -1,14 +1,14 @@
 {
   "name": "learnbun",
   "module": "index.ts",
-  "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "dependencies": {
-    "glfw.c": "^3.1.1"
-  }
+  "scripts": {
+    "dev": "bun run src/index.ts"
+  },
+  "type": "module"
 }
