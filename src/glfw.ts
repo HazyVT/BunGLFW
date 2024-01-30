@@ -51,5 +51,29 @@ export const lib = dlopen(path, {
   glfwGetWindowAttrib: {
     args: ["ptr", "int"],
     returns: "int"
-  }
+  },
+  glfwDestroyWindow: {
+    args: ["ptr"],
+    returns: "void"
+  },
+  glfwTerminate: {
+    returns: "void"
+  },
+  glfwDefaultWindowHints: {
+    returns: "void"
+  },
+  glfwWindowHint: {
+    args: ["ptr", "int"],
+    returns: "void"
+  },
+  glfwInitHint: {
+    args: ["int", "int"],
+    returns: "void"
+  },
+  glfwGetError: {
+    args: ["cstring"],
+    returns: "int"
+  },
+  
+
 })

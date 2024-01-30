@@ -285,11 +285,14 @@ export const GLFW_PLATFORM_UNAVAILABLE  = 0x0001000E
 // Types
 export type glfwMonitor = number | null;
 export type glfwWindow = number | null;
+export type glfwAllocator = number | null;
+export type glfwCursor = number | null;
 
 // Void argument functions
 export const glfwInit = lib.symbols.glfwInit;
 export const glfwPollEvents = lib.symbols.glfwPollEvents;
-
+export const glfwTerminate = lib.symbols.glfwTerminate;
+export const glfwDefaultWindowHints = lib.symbols.glfwDefaultWindowHints;
 
 // Window
 export const glfwCreateWindow = (width: number, height: number, title: string, monitor: glfwMonitor, share: glfwWindow) => lib.symbols.glfwCreateWindow(width, height, Buffer.from(title), monitor, share);
@@ -299,7 +302,17 @@ export const glfwShowWindow = (window: glfwWindow) => lib.symbols.glfwShowWindow
 export const glfwWindowShouldClose = (window: glfwWindow) => lib.symbols.glfwWindowShouldClose(window);
 export const glfwSwapBuffers = (window: glfwWindow) => lib.symbols.glfwSwapBuffers(window);
 export const glfwGetWindowAttrib = (window: glfwWindow, attribute: number) => lib.symbols.glfwGetWindowAttrib(window, attribute);
+export const glfwDestroyWindow = (window: glfwWindow) => lib.symbols.glfwDestroyWindow(window);
+export const glfwWindowHint = (hint: number, state: number) => lib.symbols.glfwWindowHint(hint, state);
+export const glfwInitHint = (hint: number, state: number) => lib.symbols.glfwInitHint(hint, state);
+export const glfwGetError = (description: string) => lib.symbols.glfwGetError(Buffer.from(description));
 
+
+// TESTING
+const callback = new JSCallback(err => err, {
+  args: ["int", "cstring"],
+  returns: ""
+})
 
 
 
