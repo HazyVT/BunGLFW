@@ -494,6 +494,3 @@ export const glfwSetCursorEnterCallback = (window: glfwWindow, callback: GLFWcur
   })
   lib.symbols.glfwSetScrollCallback(window, clb);
 }
-
-
-
