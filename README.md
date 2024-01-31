@@ -1,3 +1,3 @@
 # BunGLFW
 
-Typescript bindings for bun
+Typescript bindings for bun. No installation needed.

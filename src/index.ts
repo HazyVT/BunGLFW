@@ -307,7 +307,7 @@ export type GLFWmonitorfun = (window: glfwWindow, event: number) => void;
 export type GLFWjoystickfun = (joystick_id: number, event: number) => void;
 export type GLFWmousebuttonfun = (window: glfwWindow, button: number, action: number, mods: number) => void;
 export type GLFWcursorposfun = (window: glfwWindow, xpos: number, ypos: number) => void;
-
+export type GLFWerrorfun = (error_code: number, description: Buffer) => void;
 
 // Void argument functions
 export const glfwInit = lib.symbols.glfwInit;
@@ -493,4 +493,12 @@ export const glfwSetCursorEnterCallback = (window: glfwWindow, callback: GLFWcur
     returns: "void"
   })
   lib.symbols.glfwSetScrollCallback(window, clb);
+}
+
+export const glfwSetErrorCallback = (callback: GLFWerrorfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["int", "cstring"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetErrorCallback(clb);
 }
