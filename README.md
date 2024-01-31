@@ -2,6 +2,11 @@
 
 Typescript bindings for bun. No installation needed.
 
+To install please use 
+```node
+bun install bunglfw
+```
+
 Here is an example of some code
 
 ```ts
