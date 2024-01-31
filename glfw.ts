@@ -6,7 +6,7 @@ let path: string = "";
 if (platform == "darwin") {
   path = import.meta.dir + `/lib/libglfw.3.${suffix}`;
 } else if (platform == "win32") {
-  path = import.meta.dir + `src/lib/glfw3.${suffix}`;
+  path = import.meta.dir + `/lib/glfw3.${suffix}`;
 }
 
 export const lib = dlopen(path, {
