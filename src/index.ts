@@ -298,6 +298,16 @@ export type GLFWwindowiconifyfun = (window: glfwWindow, iconified: number) => vo
 export type GLFWwindowmaximizefun = (window: glfwWindow, maximized: number) => void;
 export type GLFWframebuffersizefun = (window: glfwWindow, width: number, height: number) => void;
 export type GLFWwindowcontentscalefun = (window: glfwWindow, x_scale: number, y_scale: number) => void; 
+export type GLFWcursorenterfun = (window: glfwWindow, entered: number) => void;
+export type GLFWscrollfun = (window: glfwWindow, x_offset: number, y_offset: number) => void;
+export type GLFWkeyfun = (window: glfwWindow, key: number, scancode: number, action: number, mods: number) => void;
+export type GLFWcharfun = (window: glfwWindow, codepoint: number) => void;
+export type GLFWcharmodsfun = (window: glfwWindow, codepoint: number, mods: number) => void;
+export type GLFWmonitorfun = (window: glfwWindow, event: number) => void;
+export type GLFWjoystickfun = (joystick_id: number, event: number) => void;
+export type GLFWmousebuttonfun = (window: glfwWindow, button: number, action: number, mods: number) => void;
+export type GLFWcursorposfun = (window: glfwWindow, xpos: number, ypos: number) => void;
+
 
 // Void argument functions
 export const glfwInit = lib.symbols.glfwInit;
@@ -306,6 +316,10 @@ export const glfwTerminate = lib.symbols.glfwTerminate;
 export const glfwDefaultWindowHints = lib.symbols.glfwDefaultWindowHints;
 export const glfwWaitEvents = lib.symbols.glfwWaitEvents;
 export const glfwPostEmptyEvent = lib.symbols.glfwPostEmptyEvent;
+export const glfwRawMouseMotionSupported = lib.symbols.glfwRawMouseMotionSupported;
+export const glfwGetTime =  lib.symbols.glfwGetTime;
+export const glfwGetTimerValue = () => lib.symbols.glfwGetTimerValue().toString();
+export const glfwGetTimerFrequency = () => lib.symbols.glfwGetTimerFrequency().toString();
 
 // Window
 export const glfwCreateWindow = (width: number, height: number, title: string, monitor: glfwMonitor, share: glfwWindow) : glfwWindow => lib.symbols.glfwCreateWindow(width, height, Buffer.from(title), monitor, share);
@@ -336,7 +350,21 @@ export const glfwFocusWindow = (window: glfwWindow) : void => lib.symbols.glfwFo
 export const glfwRequestWindowAttention = (window: glfwWindow) : void => lib.symbols.glfwRequestWindowAttention(window);
 export const glfwGetWindowMonitor = (window: glfwWindow) : glfwMonitor => lib.symbols.glfwGetWindowMonitor(window);
 export const glfwSetWindowAttrib = (window: glfwWindow, attribute: number, value: number) : void => lib.symbols.glfwSetWindowAttrib(window, attribute, value);
-export const glfwWaitEventsTimeout = (timeout: number) => lib.symbols.glfwWaitEventsTimeout(timeout);
+export const glfwWaitEventsTimeout = (timeout: number) : void => lib.symbols.glfwWaitEventsTimeout(timeout);
+export const glfwGetInputMode = (window: glfwWindow, mode: number) : number => lib.symbols.glfwGetInputMode(window, mode);
+export const glfwSetInputMode = (window: glfwWindow, mode: number, value: number) : void => lib.symbols.glfwSetInputMode(window, mode, value);
+export const glfwGetKeyName = (key: number, scancode: number) : string => lib.symbols.glfwGetKeyName(key, scancode).toString();
+export const glfwGetKeyScancode = (key: number) : number => lib.symbols.glfwGetKeyScancode(key);
+export const glfwGetKey = (window: glfwWindow, key: number) : number => lib.symbols.glfwGetKey(window, key);
+export const glfwGetMouseButton = (window: glfwWindow, button: number) : number => lib.symbols.glfwGetMouseButton(window, button);
+export const glfwSetCursorPos = (window: glfwWindow, x_pos: number, y_pos: number) : void => lib.symbols.glfwSetCursorPos(window, x_pos, y_pos);
+export const glfwJoystickPresent = (joystick_id: number) : number => lib.symbols.glfwJoystickPresent(joystick_id);
+export const glfwGetJoystickName = (joystick_id: number) : string => lib.symbols.glfwGetJoystickName(joystick_id).toString();
+export const glfwJoystickIsGamepad = (joystick_id: number) : boolean => lib.symbols.glfwJoystickIsGamepad(joystick_id);
+export const glfwSetTime = (time: number) : void => lib.symbols.glfwSetTime(time);
+export const glfwGetCursorPos = (window: glfwWindow, xpos: number, ypos: number) : number => lib.symbols.glfwGetCursorPos(window, xpos , ypos);
+
+
 
 // Setters
 export const glfwSetWindowPosCallback = (window: glfwWindow, callback: GLFWwindowposfun) : void => {
@@ -403,8 +431,69 @@ export const glfwSetFramebufferSizeCallback = (window: glfwWindow, callback: GLF
   lib.symbols.glfwSetFramebufferSizeCallback(window, clb);
 }
 
+export const glfwSetKeyCallback = (window: glfwWindow, callback: GLFWkeyfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int", "int", "int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetKeyCallback(window, clb);
+}
 
+export const glfwSetCharCallback = (window: glfwWindow, callback: GLFWcharfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetCharCallback(window, clb);
+}
 
+export const glfwSetCharModsCallback = (window: glfwWindow, callback: GLFWcharmodsfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetCharModsCallback(window, clb);
+}
+
+export const glfwSetMouseButtonCallback = (window: glfwWindow, callback: GLFWmousebuttonfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int", "int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetMouseButtonCallback(window, clb);
+}
+
+export const glfwSetScrollCallback = (window: glfwWindow, callback: GLFWscrollfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetScrollCallback(window, clb);
+}
+
+export const glfwSetJoystickCallback = (window: glfwWindow, callback: GLFWjoystickfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetScrollCallback(window, clb);
+}
+
+export const glfwSetCursorPosCallback = (window: glfwWindow, callback: GLFWcursorposfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetScrollCallback(window, clb);
+}
+
+export const glfwSetCursorEnterCallback = (window: glfwWindow, callback: GLFWcursorenterfun) : void => {
+  const clb = new JSCallback(callback, {
+    args: ["ptr", "int"],
+    returns: "void"
+  })
+  lib.symbols.glfwSetScrollCallback(window, clb);
+}
 
 
 

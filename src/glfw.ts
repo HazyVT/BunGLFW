@@ -195,6 +195,103 @@ export const lib = dlopen(path, {
     args: ["ptr", FFIType.function],
     returns: "ptr"
   },
+  glfwSetKeyCallback: {
+    args: ['ptr', FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetCharCallback: {
+    args: ['ptr', FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetCharModsCallback: {
+    args: ['ptr', FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetMouseButtonCallback: {
+    args: ['ptr', FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetScrollCallback: {
+    args: ['ptr', FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetJoystickCallback: {
+    args: ['ptr', FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetCursorPosCallback: {
+    args: ['ptr', FFIType.function],
+    returns: "ptr"
+  },
+  glfwSetCursorEnterCallback: {
+    args: ["ptr", FFIType.function],
+    returns: "ptr"
+  },
+  glfwGetInputMode: {
+    args: ["ptr", "int"],
+    returns: "int"
+  },
+  glfwSetInputMode: {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  },
+  glfwRawMouseMotionSupported: {
+    returns: "int"
+  },
+  glfwGetKeyName: {
+    args: ["int", "int"],
+    returns: "cstring"
+  },
+  glfwGetKeyScancode: {
+    args: ["int"],
+    returns: "int"
+  },
+  glfwGetKey: {
+    args: ["ptr", "int"],
+    returns: "int"
+  },
+  glfwGetMouseButton: {
+    args: ["ptr", "int"],
+    returns: 'int'
+  },
+  glfwSetCursorPos: {
+    args: ["ptr", "int", "int"],
+    returns: "void"
+  },
+  glfwJoystickPresent: {
+    args: ["int"],
+    returns: "int"
+  },
+  glfwGetJoystickName: {
+    args: ["int"],
+    returns: "cstring"
+  },
+  glfwJoystickIsGamepad: {
+    args: ["int"],
+    returns: "bool"
+  },
+  glfwGetTime: {
+    args: [],
+    returns: "double"
+  },
+  glfwSetTime: {
+    args: ["double"],
+    returns: "void"
+  },
+  glfwGetTimerValue: {
+    args: [],
+    returns: "uint64_t"
+  },
+  glfwGetTimerFrequency: {
+    args: [],
+    returns: "uint64_t"
+  },
+  glfwGetCursorPos: {
+    args: ["ptr", "ptr", "ptr"],
+    returns: "int"
+  },
+
+
 
 
 })

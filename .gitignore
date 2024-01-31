@@ -127,3 +127,7 @@ dist
 .pnp.*
 
 main.ts
+
+/dist
+
+.vscode

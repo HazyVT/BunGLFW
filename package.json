@@ -1,6 +1,8 @@
 {
-  "name": "learnbun",
-  "module": "index.ts",
+  "name": "bunglfw",
+  "module": "src/index.ts",
+  "version": "1.0.0",
+  "description": "Typescript bindings for GLFW all for bun",
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -10,5 +12,8 @@
   "scripts": {
     "dev": "bun run main.ts"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "typescript": "^5.3.3"
+  }
 }
