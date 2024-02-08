@@ -1,4 +1,4 @@
-import { ptr, JSCallback, CFunction, FFIType } from 'bun:ffi'
+import { ptr, JSCallback, CFunction, FFIType, type Pointer } from 'bun:ffi'
 import { lib } from "./glfw"
 
 // GLFW window vairables
@@ -282,11 +282,24 @@ export const GLFW_FEATURE_UNAVAILABLE   = 0x0001000C
 export const GLFW_FEATURE_UNIMPLEMENTED = 0x0001000D
 export const GLFW_PLATFORM_UNAVAILABLE  = 0x0001000E
 
+export const glfw_error_codes = new Map<string, number>([
+  ['GLFW_NOT_INITIALIZED', 0x00010001],
+  ['GLFW_NO_CURRENT_CONTEXT', 0x00010002],
+  ['GLFW_INVALID_ENUM', 0x00010003],
+  ['GLFW_INVALID_VALUE', 0x00010004],
+  ['GLFW_OUT_OF_MEMORY', 0x00010005],
+  ['GLFW_API_UNAVAILABLE', 0x00010006],
+  ['GLFW_VERSION_UNAVAILABLE', 0x00010007],
+  ['GLFW_PLATFORM_ERROR', 0x00010008],
+  ['GLFW_FORMAT_UNAVAILABLE', 0x00010009]
+])
+
+
 /* Types */
-export type glfwMonitor = number | null;
-export type glfwWindow = number | null;
-export type glfwAllocator = number | null;
-export type glfwCursor = number | null;
+export type glfwMonitor = Pointer | null;
+export type glfwWindow = Pointer | null;
+export type glfwAllocator = Pointer | null;
+export type glfwCursor = Pointer | null;
 
 /* Function Types */
 export type GLFWwindowposfun = (window: glfwWindow, xpos: number, ypos: number) => void;
@@ -307,7 +320,7 @@ export type GLFWmonitorfun = (window: glfwWindow, event: number) => void;
 export type GLFWjoystickfun = (joystick_id: number, event: number) => void;
 export type GLFWmousebuttonfun = (window: glfwWindow, button: number, action: number, mods: number) => void;
 export type GLFWcursorposfun = (window: glfwWindow, xpos: number, ypos: number) => void;
-export type GLFWerrorfun = (error_code: number, description: Buffer) => void;
+export type GLFWerrorfun = (error_code: number, description: string) => void;
 
 // Void argument functions
 export const glfwInit = lib.symbols.glfwInit;

@@ -1,7 +1,7 @@
 {
   "name": "bunglfw",
   "module": "index.ts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Typescript bindings for GLFW all for bun",
   "devDependencies": {
     "@types/bun": "latest"
